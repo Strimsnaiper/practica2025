@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ restaurant.name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <h1>{{ restaurant.name }}</h1>
+
+    <!-- Вставляем сюда изображение ресторана -->
+    <img src="{% if restaurant.image %}{{ restaurant.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" 
+         alt="Фото ресторана" width="300">
+
+    <p>{{ restaurant.description }}</p>
+    <p><strong>Адрес:</strong> {{ restaurant.address }}</p>
+
+    <h2>Отзывы</h2>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <strong>{{ review.author }}</strong> (Оценка: {{ review.rating }})<br>
+                {{ review.comment }}<br>
+                <em>{{ review.created_at }}</em>
+            </li>
+        {% empty %}
+            <li>Отзывов пока нет.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Оставить отзыв</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+
+    <p><a href="{% url 'restaurant_list' %}">← Назад к списку</a></p>
+</body>
+</html>

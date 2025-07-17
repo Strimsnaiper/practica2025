@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список ресторанов</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <h1>Список ресторанов</h1>
+    <ul>
+        {% for restaurant in restaurants %}
+            <li>
+                <a href="{% url 'restaurant_detail' restaurant.pk %}">
+                    {{ restaurant.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
